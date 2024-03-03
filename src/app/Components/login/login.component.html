@@ -1,0 +1,26 @@
+<form [formGroup]="login.LoginFormGroup">
+  <div
+  style="margin: 20px 582px 10px 480px;border-radius: 15px; background-color: rgba(240, 238, 238, 0.634); padding: 5px 5px 5px 5px;">
+  <h4 style="margin-left: 110px; color: rgb(0, 61, 22);">Log In</h4>
+  <div class="row">
+      <div style="padding: 1px 40px 1px 20px">
+          <label for="Username">UserName</label>
+          <input type="text" formControlName="UserName" class="form-control">
+          <small *ngIf="login.LoginFormGroup.controls['UserName'].invalid && login.LoginFormGroup.controls['UserName'].touched"
+          class = "text-danger"><sup>*</sup>Valid UserName Required.</small>
+      </div>
+  </div>
+  <div class="row">
+      <div style="padding: 1px 40px 1px 20px">
+          <label for="Password">Password</label>
+          <input type="password" formControlName="Password" class="form-control">
+          <small *ngIf="login.LoginFormGroup.controls['Password'].invalid && login.LoginFormGroup.controls['Password'].touched"
+          class = "text-danger"><sup>*</sup>Valid UserName Required.</small>
+          <div>
+              <input style="padding-top: 10px;" type="checkbox"> Show Password
+          </div>
+      </div>
+  </div>
+  <div style="padding-left: 10px;"><a class="btn btn-primary" (click)="Login()">LogIn</a></div>
+</div>
+</form>

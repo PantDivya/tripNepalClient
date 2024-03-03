@@ -1,0 +1,172 @@
+ <!--Destination table-->
+ <!-- Button trigger modal -->
+ <button style="float:right; margin:10px" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Add Destination
+  </button>
+  
+  <table class="table table-striped table-sm" style="margin: 10px;">
+    <thead>
+        <th>SN</th>
+        <th>Photo</th>
+        <th>Destination Name</th>
+        <th>Discription</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+        <th>Action</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of destinationList;let i = index;">
+        <td>{{i+1}}</td>
+        <td>{{data.Photo}}</td>
+        <td>{{data.Name}}</td>
+        <td>{{data.Description}}</td>
+        <td>{{data.Latitude}}</td>
+        <td>{{data.Longitude}}</td>
+        <td>
+          <button class="btn btn-primary" 
+          (click)="selectedDestination(data.DestinationId)" data-bs-toggle="modal" data-bs-target="#editDestinationRow">
+            Edit</button>
+          <button  class="btn btn-danger" (click)="fetchDestinationId(data?.DestinationId)" data-bs-toggle="modal"
+          data-bs-target="#deleteDestination"style="margin: 10px;">
+          Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  
+  
+  <!-- Modal for New Destination-->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Destination</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+         <form  [formGroup]="destination.DestinationForm" (ngSubmit)="addDestination()">
+          <div class="row">
+          <div >
+          <label for="Photo">Photo</label>
+            <input type="text" formControlName="Photo" class="form-control form-group">
+            <small *ngIf="destination.DestinationForm.controls['Photo'].invalid && destination.DestinationForm.controls['Photo'].touched"
+                class = "text-danger"><sup>*</sup>Photo is required.</small>
+              </div>
+          <div>
+          <label for="Name">Destination Name</label>
+            <input type="text" formControlName="Name" class="form-control form-group">
+             <small *ngIf="destination.DestinationForm.controls['Name'].invalid && destination.DestinationForm.controls['Name'].touched"
+                class = "text-danger"><sup>*</sup>Name Required.</small>
+              </div>
+              <div>
+          <label for="Description">Description</label>
+            <input type="text" formControlName="Description" class="form-control form-group">
+                <small *ngIf="destination.DestinationForm.controls['Description'].invalid && destination.DestinationForm.controls['Description'].touched"
+                class = "text-danger"><sup>*</sup>Description Required.</small>
+              </div>
+              <div>
+          <label for="Latitude">Latitude</label>
+            <input type="text" formControlName="Latitude" class="form-control form-group">
+                <small *ngIf="destination.DestinationForm.controls['Latitude'].invalid && destination.DestinationForm.controls['Latitude'].touched"
+                class = "text-danger"><sup>*</sup>Latitude Required.</small>
+              </div>
+              <div>
+            <label for="Longitude">Longitude</label>
+            <input type="text" formControlName="Longitude" class="form-control form-group">
+                <small *ngIf="destination.DestinationForm.controls['Longitude'].invalid && destination.DestinationForm.controls['Longitude'].touched"
+                class = "text-danger"><sup>*</sup>Longitude Required.</small>
+            </div>
+  
+        </div>
+      </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" #closebutton class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" [disabled]="destination.DestinationForm.invalid" (click)="addDestination()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    <!-- Modal for Edit Destination-->
+    <div class="modal fade" id="editDestinationRow" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Doctors</h5>
+            <button type="button" class="btn-close" (click)="resetDestinationForm()" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" *ngIf="isDestinationSelected">
+          
+            <form  [formGroup]="destination.DestinationForm" (ngSubmit)="editDestination()">
+        <div class="row">
+          
+          
+          
+          <div >
+            <label for="Photo">Photo</label>
+              <input type="text" formControlName="Photo" class="form-control form-group">
+              <small *ngIf="destination.DestinationForm.controls['Photo'].invalid && destination.DestinationForm.controls['Photo'].touched"
+                  class = "text-danger"><sup>*</sup>Photo is required.</small>
+                </div>
+            <div>
+            <label for="Name">Destination Name</label>
+              <input type="text" formControlName="Name" class="form-control form-group">
+               <small *ngIf="destination.DestinationForm.controls['Name'].invalid && destination.DestinationForm.controls['Name'].touched"
+                  class = "text-danger"><sup>*</sup>Name Required.</small>
+                </div>
+                <div>
+            <label for="Description">Description</label>
+              <input type="text" formControlName="Description" class="form-control form-group">
+                  <small *ngIf="destination.DestinationForm.controls['Description'].invalid && destination.DestinationForm.controls['Description'].touched"
+                  class = "text-danger"><sup>*</sup>Description Required.</small>
+                </div>
+                <div>
+            <label for="Latitude">Latitude</label>
+              <input type="text" formControlName="Latitude" class="form-control form-group">
+                  <small *ngIf="destination.DestinationForm.controls['Latitude'].invalid && destination.DestinationForm.controls['Latitude'].touched"
+                  class = "text-danger"><sup>*</sup>Latitude Required.</small>
+                </div>
+                <div>
+              <label for="Longitude">Longitude</label>
+              <input type="text" formControlName="Longitude" class="form-control form-group">
+                  <small *ngIf="destination.DestinationForm.controls['Longitude'].invalid && destination.DestinationForm.controls['Longitude'].touched"
+                  class = "text-danger"><sup>*</sup>Longitude Required.</small>
+              </div>
+         
+  
+        </div>
+      </form>
+  
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" #closeupdate class="btn btn-secondary" (click)="resetDestinationForm()" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" [disabled]="destination.DestinationForm.invalid" (click)="editDestination()">Update</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+  
+  <!--Delete Confirmation Modal -->
+  <div class="modal fade" id="deleteDestination" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-title" id="deleteModalLabel" style="text-align:center;">Are you sure you want to delete?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" #closedelete data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" (click)="removeDestination()">Yes</button>
+      </div>
+    </div>
+  </div>
+  </div>
